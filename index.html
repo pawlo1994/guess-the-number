@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play Simple Guess The Number Game">
+    <meta property="og:image" content="images/share.jpg">
+    <link rel="icon" href="images/icon.png">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/section.css">
+    <link rel="stylesheet" href="css/form.css">
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+        integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
+        crossorigin="anonymous" />
+    <script defer src="js/script.js"></script>
+    <title>Guess the Number</title>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="header__inner">Guess the Number</h1>
+    </header>
+    <main class="main">
+        <section class="section js-chooseLevelSection">
+            <h2 class="section__header">Welcome to Guess The Number!</h2>
+            <form class="form js-levelForm">
+                <h3 class="form__header">Choose difficulty level:</h3>
+                <select class="form__select js-chooseLevel">
+                    <option value="easy">Easy
+                        (1-200)</option>
+                    <option value="medium">Medium
+                        (1-500)</option>
+                    <option value="hard">Hard
+                        (1-1000)</option>
+                </select>
+                <button class="section__button js-startGameButton">Start Game</button>
+            </form>
+        </section>
+        <section class="section js-gameSection section--hidden">
+            <h2 class="section__header js-formSectionHeader">Type below your number</h2>
+            <p class="section__paragraph js-range">Range: <span class="section__span js-minNumber">1</span>
+                - <span class="section__span js-maxNumber"></span></p>
+            <p class="section__paragraph">Chances left: <span class="section__span js-chancesLeft">10</span></p>
+            <p class="section__paragraph section__paragraph--result js-resultParagraph"><span
+                    class="section__resultSpan js-result"></span>
+            </p>
+            <form class="form js-gameForm">
+                <p class="form__paragraph">
+                    <label for="userNumber" class="form__label">Your number:</label><input type="number"
+                        class="form__input js-userNumber" name="userNumber" id="userNumber" min="1" max="1000" step="1"
+                        required>
+                </p>
+                <button class="section__button js-checkButton">Check!</button>
+                <button type="reset" class="section__button section__button--hidden js-resetButton">Try
+                    Again</button>
+                <button type="reset" class="section__button section__button--hidden js-chooseLevelButton">Choose
+                    level</button>
+            </form>
+        </section>
+    </main>
+    <footer class="footer">Copyright &copy; Pawlo1994 2021</footer>
+</body>
+
+</html>

@@ -1,0 +1,115 @@
+.section {
+    font-size: 24px;
+}
+
+.section__header {
+    font-size: 24px;
+    font-weight: normal;
+    padding: 5px;
+    background-color: #aaf;
+    border-radius: 10px;
+    margin: 5px auto;
+    text-align: center;
+}
+
+.section__paragraph {
+    margin: 5px auto;
+    text-transform: uppercase;
+    text-align: center;
+    transition: 1s;
+    transition-property: background-color, font-weight, color;
+}
+
+.section__paragraph--result {
+    font-weight: bold;
+    padding: 5px;
+    background-color: #aaf;
+    border-radius: 10px;
+}
+
+.section__resultSpan--high {
+    display: block;
+    animation-name: shakeHigh;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+}
+
+.section__resultSpan--low {
+    display: block;
+    animation-name: shakeLow;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+}
+
+.section__paragraph--resultBad {
+    background-color: rgb(255, 0, 0);
+    color: #fff;
+}
+
+.section__paragraph--resultGood {
+    background-color: rgb(0, 255, 0);
+}
+
+.section__span {
+    font-weight: bold;
+}
+
+.section__button {
+    display: block;
+    font-size: 14px;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    margin: 10px auto;
+}
+
+.section__button--hidden, .section__header--hidden, .section--hidden, .section__paragraph--hidden {
+    display: none;
+}
+
+.section__button:hover {
+    background-color: #666;
+}
+
+.section__button:active {
+    background-color: #fff;
+    color: #000;
+}
+
+@keyframes shakeHigh {
+    from {
+        transform: unset;
+    }
+    25% {
+        transform: translateX(2%);
+    }
+    50% {
+        transform: unset;
+    }
+    75% {
+        transform: translateX(2%);
+    }
+    to {
+        transform: unset;
+    }
+}
+
+@keyframes shakeLow {
+    from {
+        transform: unset;
+    }
+    25% {
+        transform: translateX(-2%);
+    }
+    50% {
+        transform: unset;
+    }
+    75% {
+        transform: translateX(-2%);
+    }
+    to {
+        transform: unset;
+    }
+}
