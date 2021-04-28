@@ -107,7 +107,7 @@
         element1.innerText = text;
         element2.classList.add(classAdd);
         element1.classList.remove("section__resultSpan--low");
-        element1.classList.remove("section__resultSpan--High");
+        element1.classList.remove("section__resultSpan--high");
         range.classList.toggle("section__paragraph--hidden");
         userNumber.disabled = true;
     };
