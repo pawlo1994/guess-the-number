@@ -1,33 +1,11 @@
 {
-    const minNumber = document.querySelector(".js-minNumber");
-    const maxNumber = document.querySelector(".js-maxNumber");
-    const userNumber = document.querySelector(".js-userNumber");
-    const chancesLeft = document.querySelector(".js-chancesLeft");
-    const result = document.querySelector(".js-result");
-    const resultParagraph = document.querySelector(".js-resultParagraph");
-    const range = document.querySelector(".js-range");
-    const formSectionHeader = document.querySelector(".js-formSectionHeader");
-
     let maxNumberValue = 0;
     let chosenNumber = 0;
     let chancesLeftValue = 10;
 
-
-    const assignChancesValue = (value) => {
-        chancesLeftValue = value;
-        chancesLeft.innerText = chancesLeftValue + "";
-        document.querySelector(".js-chancesLeft").innerText = chancesLeft.innerText;
-    };
-
-    const setFocusOnUserNumber = () => {
+    const setFocusOnUserNumber = (userNumber) => {
         userNumber.focus();
         userNumber.select();
-    };
-
-    const grabLive = () => {
-        chancesLeftValue -= 1;
-        chancesLeft.innerText = chancesLeftValue + "";
-        document.querySelector(".js-chancesLeft").innerText = chancesLeft.innerText;
     };
 
     const swapButton = (reset, chooseLevel) => {
@@ -37,7 +15,14 @@
         chooseLevel.classList.toggle("section__button--hidden");
     };
 
-    const chooseNumber = (max) => {
+    const swapSections = () => {
+        const gameSection = document.querySelector(".js-gameSection");
+        const chooseLevelSection = document.querySelector(".js-chooseLevelSection");
+        chooseLevelSection.classList.toggle("section--hidden");
+        gameSection.classList.toggle("section--hidden");
+    };
+
+    const chooseNumber = (max, userNumber, minNumber, maxNumber) => {
         userNumber.min = 1;
         minNumber.innerText = userNumber.min + "";
         maxNumberValue = max;
@@ -46,92 +31,111 @@
         maxNumber.innerText = maxNumberValue + "";
     };
 
-    const swapSections = () => {
-        const gameSection = document.querySelector(".js-gameSection");
-        const chooseLevelSection = document.querySelector(".js-chooseLevelSection");
-        chooseLevelSection.classList.toggle("section--hidden");
-        gameSection.classList.toggle("section--hidden");
-    };
-
-    const chooseLevel = () => {
+    const chooseLevel = (userNumber, minNumber, maxNumber) => {
         const chooseLevelElement = document.querySelector(".js-chooseLevel");
         switch (chooseLevelElement.value) {
             case "easy": {
-                chooseNumber(200);
+                chooseNumber(200, userNumber, minNumber, maxNumber);
                 break;
             }
             case "medium": {
-                chooseNumber(500);
+                chooseNumber(500, userNumber, minNumber, maxNumber);
                 break;
             } case "hard": {
-                chooseNumber(1000);
+                chooseNumber(1000, userNumber, minNumber, maxNumber);
                 break;
             }
         };
         swapSections();
     };
 
-    const decreaseUserNumberMax = () => {
+    const assignChancesValue = (value) => {
+        const chancesLeft = document.querySelector(".js-chancesLeft");
+        chancesLeftValue = value;
+        chancesLeft.innerText = chancesLeftValue + "";
+        document.querySelector(".js-chancesLeft").innerText = chancesLeft.innerText;
+    };
+
+    const grabLive = () => {
+        chancesLeftValue -= 1;
+        assignChancesValue(chancesLeftValue);
+    };
+
+    const decreaseUserNumberMax = (userNumber, maxNumber) => {
         userNumber.max = +userNumber.value - 1;
         maxNumber.innerText = userNumber.max + "";
     };
 
-    const increaseUserNumberMin = () => {
+    const increaseUserNumberMin = (userNumber, minNumber) => {
         userNumber.min = +userNumber.value + 1;
         minNumber.innerText = userNumber.min + "";
     };
 
-    const showTip = (text, classRemove, classAdd) => {
+    const showTip = (text, classRemove, classAdd, result) => {
         result.innerText = text;
         result.classList.remove(classRemove);
         result.classList.add(classAdd);
     };
 
-    const checkNumber = () => {
+    const onNumberToHighEvents = (userNumber, maxNumber, result) => {
         if ((+userNumber.value) > (+chosenNumber)) {
-            decreaseUserNumberMax();
-            grabLive();
-            showTip("too high!", "section__resultSpan--low", "section__resultSpan--high");
-        } else if ((+userNumber.value) < (+chosenNumber)) {
-            increaseUserNumberMin();
-            grabLive();
-            showTip("too low!", "section__resultSpan--high", "section__resultSpan--low");
+            decreaseUserNumberMax(userNumber, maxNumber);
+            showTip("too high!", "section__resultSpan--low", "section__resultSpan--high", result);
         };
     };
 
-    const showResult = (text, element1, element2, classAdd) => {
-        element1.innerText = text;
-        element2.classList.add(classAdd);
-        element1.classList.remove("section__resultSpan--low");
-        element1.classList.remove("section__resultSpan--high");
+    const onNumberToLowEvents = (userNumber, minNumber, result) => {
+        if ((+userNumber.value) < (+chosenNumber)) {
+            increaseUserNumberMin(userNumber, minNumber);
+            showTip("too low!", "section__resultSpan--high", "section__resultSpan--low", result);
+        };
+    };
+
+    const checkNumber = (userNumber, minNumber, maxNumber, result) => {
+        grabLive();
+        onNumberToHighEvents(userNumber, maxNumber, result);
+        onNumberToLowEvents(userNumber, minNumber, result);
+    };
+
+    const showResult = (text, result, resultParagraph, range, classAdd) => {
+        result.innerText = text;
+        resultParagraph.classList.add(classAdd);
+        result.classList.remove("section__resultSpan--low");
+        result.classList.remove("section__resultSpan--high");
         range.classList.toggle("section__paragraph--hidden");
         userNumber.disabled = true;
     };
 
-    const showWinOrLose = (reset, chooseLevel) => {
+    const onWinEvents = (result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
+        showResult("you win!!!", result, resultParagraph, range, "section__paragraph--resultGood");
+        swapButton(reset, chooseLevel);
+        formSectionHeader.classList.toggle("section__header--hidden");
+    };
+
+    const onLoseEvents = (loseText, result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
+        showResult(loseText, result, resultParagraph, range, "section__paragraph--resultBad");
+        swapButton(reset, chooseLevel);
+        formSectionHeader.classList.toggle("section__header--hidden");
+    };
+
+    const showWinOrLose = (reset, chooseLevel, result, resultParagraph, range, formSectionHeader) => {
         if ((+userNumber.value) === (+chosenNumber)) {
-            showResult("you win!!!", result, resultParagraph, "section__paragraph--resultGood");
-            swapButton(reset, chooseLevel);
-            formSectionHeader.classList.toggle("section__header--hidden");
+            onWinEvents(result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
         }
         else if ((chancesLeftValue === 0) || (+userNumber.min === +userNumber.max)) {
             if (chancesLeftValue !== 0) {
                 assignChancesValue(0);
-                showResult(`Difference between min and max number equals 0!
+                onLoseEvents(`Difference between min and max number equals 0!
                 Game interrupted.
-                Correct number is ${+chosenNumber}.`, result, resultParagraph, "section__paragraph--resultBad");
-                swapButton(reset, chooseLevel);
-                formSectionHeader.classList.toggle("section__header--hidden");
+                Correct number is ${+chosenNumber}.`, result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
             } else {
-                showResult(`you lose!!!
-                Correct number is ${+chosenNumber}.`, result, resultParagraph, "section__paragraph--resultBad");
-                swapButton(reset, chooseLevel);
-                formSectionHeader.classList.toggle("section__header--hidden");
+                onLoseEvents(`you lose!!!
+                Correct number is ${+chosenNumber}.`, result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
             };
         };
     };
 
-    const hideResult = () => {
+    const hideResult = (result, resultParagraph, userNumber, range) => {
         result.innerText = "";
         result.classList.remove("section__resultSpan--low");
         result.classList.remove("section__resultSpan--high");
@@ -146,33 +150,40 @@
         const chooseLevelButton = document.querySelector(".js-chooseLevelButton");
         const gameForm = document.querySelector(".js-gameForm");
         const levelForm = document.querySelector(".js-levelForm");
+        const formSectionHeader = document.querySelector(".js-formSectionHeader");
+        const minNumber = document.querySelector(".js-minNumber");
+        const maxNumber = document.querySelector(".js-maxNumber");
+        const userNumber = document.querySelector(".js-userNumber");
+        const result = document.querySelector(".js-result");
+        const resultParagraph = document.querySelector(".js-resultParagraph");
+        const range = document.querySelector(".js-range");
 
         levelForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            chooseLevel();
-            setFocusOnUserNumber();
+            chooseLevel(userNumber, minNumber, maxNumber);
+            setFocusOnUserNumber(userNumber);
         });
 
         gameForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            setFocusOnUserNumber();
-            checkNumber();
-            showWinOrLose(resetButton, chooseLevelButton);
+            setFocusOnUserNumber(userNumber);
+            checkNumber(userNumber, minNumber, maxNumber, result);
+            showWinOrLose(resetButton, chooseLevelButton, result, resultParagraph, range, formSectionHeader);
         });
 
         resetButton.addEventListener("click", () => {
-            chooseNumber(maxNumberValue);
+            chooseNumber(maxNumberValue, userNumber, minNumber, maxNumber);
             assignChancesValue(10);
-            hideResult();
+            hideResult(result, resultParagraph, userNumber, range);
             swapButton(resetButton, chooseLevelButton);
             formSectionHeader.classList.toggle("section__header--hidden");
-            setFocusOnUserNumber();
+            setFocusOnUserNumber(userNumber);
         });
 
         chooseLevelButton.addEventListener("click", () => {
             assignChancesValue(10);
             swapSections();
-            hideResult();
+            hideResult(result, resultParagraph, userNumber, range);
             swapButton(resetButton, chooseLevelButton);
             formSectionHeader.classList.toggle("section__header--hidden");
         });
