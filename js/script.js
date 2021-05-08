@@ -79,6 +79,7 @@
 
     const onNumberToHighEvents = (userNumber, maxNumber, result) => {
         if ((+userNumber.value) > (+chosenNumber)) {
+            grabLive();
             decreaseUserNumberMax(userNumber, maxNumber);
             showTip("too high!", "section__resultSpan--low", "section__resultSpan--high", result);
         };
@@ -86,13 +87,13 @@
 
     const onNumberToLowEvents = (userNumber, minNumber, result) => {
         if ((+userNumber.value) < (+chosenNumber)) {
+            grabLive();
             increaseUserNumberMin(userNumber, minNumber);
             showTip("too low!", "section__resultSpan--high", "section__resultSpan--low", result);
         };
     };
 
     const checkNumber = (userNumber, minNumber, maxNumber, result) => {
-        grabLive();
         onNumberToHighEvents(userNumber, maxNumber, result);
         onNumberToLowEvents(userNumber, minNumber, result);
     };
