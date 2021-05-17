@@ -107,13 +107,13 @@
         userNumber.disabled = true;
     };
 
-    const onWinEvents = (result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
+    const bindWinEvents = (result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
         showResult("you win!!!", result, resultParagraph, range, "section__paragraph--resultGood");
         swapButton(reset, chooseLevel);
         formSectionHeader.classList.toggle("section__header--hidden");
     };
 
-    const onLoseEvents = (loseText, result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
+    const bindLoseEvents = (loseText, result, resultParagraph, range, formSectionHeader, reset, chooseLevel) => {
         showResult(loseText, result, resultParagraph, range, "section__paragraph--resultBad");
         swapButton(reset, chooseLevel);
         formSectionHeader.classList.toggle("section__header--hidden");
@@ -121,16 +121,16 @@
 
     const showWinOrLose = (reset, chooseLevel, result, resultParagraph, range, formSectionHeader) => {
         if ((+userNumber.value) === (+chosenNumber)) {
-            onWinEvents(result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
+            bindWinEvents(result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
         }
         else if ((chancesLeftValue === 0) || (+userNumber.min === +userNumber.max)) {
             if (chancesLeftValue !== 0) {
                 assignChancesValue(0);
-                onLoseEvents(`Difference between min and max number equals 0!
+                bindLoseEvents(`Difference between min and max number equals 0!
                 Game interrupted.
                 Correct number is ${+chosenNumber}.`, result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
             } else {
-                onLoseEvents(`you lose!!!
+                bindLoseEvents(`you lose!!!
                 Correct number is ${+chosenNumber}.`, result, resultParagraph, range, formSectionHeader, reset, chooseLevel);
             };
         };
