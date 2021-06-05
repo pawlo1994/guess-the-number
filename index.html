@@ -46,12 +46,15 @@
         </section>
         <section class="section js-gameSection section--hidden">
             <h2 class="section__header js-formSectionHeader">Type below your number</h2>
-            <p class="section__paragraph js-range">Range: <span class="section__span js-minNumber">1</span>
-                - <span class="section__span js-maxNumber"></span></p>
-            <p class="section__paragraph">Chances left: <span class="section__span js-chancesLeft">10</span></p>
-            <p class="section__paragraph section__paragraph--result js-resultParagraph"><span
-                    class="section__resultSpan js-result"></span>
-            </p>
+            <div class="section__gameInfo">
+                <p class="section__paragraph js-range">&lt;&gt; <span class="section__span js-minNumber">1</span>
+                    - <span class="section__span js-maxNumber"></span></p>
+                <p class="section__paragraph section__paragraph--lives">❤ <span
+                        class="section__span js-chancesLeft">10</span></p>
+                <p class="section__paragraph section__paragraph--result js-resultParagraph"><span
+                        class="section__resultSpan js-result"></span>
+                </p>
+            </div>
             <form class="form js-gameForm">
                 <p class="form__paragraph">
                     <label for="userNumber" class="form__label">Your number:</label><input type="number"
