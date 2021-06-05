@@ -2,6 +2,12 @@
     font-size: 24px;
 }
 
+.section__gameInfo {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .section__header {
     font-size: 24px;
     font-weight: normal;
@@ -14,17 +20,23 @@
 
 .section__paragraph {
     margin: 5px auto;
+    background-color: #aaf;
+    padding: 5px;
+    border-radius: 10px;
     text-transform: uppercase;
     text-align: center;
     transition: 1s;
     transition-property: background-color, font-weight, color;
 }
 
+.section__paragraph--lives {
+    background-color: #f30;
+    color: #fff;
+}
+
 .section__paragraph--result {
     font-weight: bold;
-    padding: 5px;
-    background-color: #aaf;
-    border-radius: 10px;
+    flex-basis: 100%;
 }
 
 .section__resultSpan--high {
